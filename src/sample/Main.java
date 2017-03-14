@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
@@ -18,7 +19,7 @@ public class Main extends Application {
         Image original = new Image(getClass().getResource("gambar.jpg").toExternalForm());
         Image modified = applyNoise(original);
         ImageView imageView = new ImageView(modified);
-        root.getChildren().add(new HBox(new ImageView(original), imageView));
+        root.getChildren().add(new HBox (imageView));
 
         return root;
     }
@@ -36,13 +37,18 @@ public class Main extends Application {
             for (int x = 0; x < w; x++) {
                 Color color = pixelReader.getColor(x, y);
 
-                double noise = Math.random() / 5;
+                double noise = Math.random() / 10;
 
-                Color newColor = new Color(Math.min(color.getRed() + noise, 1), Math.min(color.getGreen() + noise, 1), Math.min(color.getBlue() + noise, 1));
+                Color newColor = new Color(
+                        Math.min(color.getRed() + noise, 1),
+                        Math.min(color.getGreen() + noise, 1),
+                        Math.min(color.getBlue() + noise, 1),
+                        1);
 
                 pixelWriter.setColor(x, y, newColor);
             }
         }
+        return image;
     }
 
     @Override
